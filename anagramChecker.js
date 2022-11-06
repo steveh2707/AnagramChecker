@@ -1,6 +1,3 @@
-// import fs from "fs";
-// import anagrams from "./data.json"
-
 import { readFile, writeFile } from "fs/promises";
 
 const anagrams = JSON.parse(await readFile("./data.json"));
@@ -93,11 +90,13 @@ function anagramChecker(args) {
   // words with letters sorted alphabetically are compared to eachother. If equal, words are anagrams and appeneded to the anagrams array and written to file
   if (sortedWord1 == sortedWord2) {
     console.log(inputs.word1 + " and " + inputs.word2 + " are an anagram");
+    // append new anagram to anagram array
     anagrams.push({
       userName: inputs.userName,
       word1: inputs.word1,
       word2: inputs.word2,
     });
+    // write anagram array to file
     writeFile("./data.json", JSON.stringify(anagrams), function (err) {
       if (err) {
         console.error(err);
