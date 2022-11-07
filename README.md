@@ -4,13 +4,21 @@ AnagramChecker is a NodeJS command line program that checks whether 2 words are 
 
 ## Using AnagramChecker
 
-Use the tool on the command line by calling the index.js file followed by your username and the 2 text values.
+Use the tool on the command line by running npm start followed by your username and the 2 text values.
 
 ```bash
-node index.js StephenHanna friend finder
+npm start StephenHanna friend finder
 ```
 
-The tool does not accept spaces or numbers.
+The tool does not accept spaces, special characters or numbers.
+
+## Testing
+
+All tests for the anagramChecker function are stored in the anagramChecker.test.js file. These can be run using npm test.
+
+```bash
+npm test
+```
 
 ## Contributing
 

@@ -1,5 +1,10 @@
 import anagramChecker from "./anagramChecker.js";
 
+// store all tests as objects in tests array
+// name of test describes test and is printed to the terminal followed by whether test has been successful when tests are run
+// inputs are the test inputs to the anagramChecker function
+// response is the expected return from the anagramChecker function based on the specified inputs
+
 let tests = [
   {
     name: "Test whether equal length validation is working: ",
@@ -34,6 +39,7 @@ let tests = [
   },
 ];
 
+// run all tests and output PASS/FAIL for each
 for (let i = 0; i < tests.length; i++) {
   anagramChecker(tests[i].inputs) === tests[i].response
     ? console.log(tests[i].name + "PASS")
