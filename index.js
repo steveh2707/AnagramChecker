@@ -4,4 +4,4 @@ import anagramChecker from "./anagramChecker.js";
 
 const args = process.argv.slice(2);
 
-anagramChecker(args);
+console.log(anagramChecker(args));

@@ -1,12 +1,11 @@
 import { readFile, writeFile } from "fs/promises";
 
-const anagrams = JSON.parse(await readFile("./data.json"));
+const anagrams = JSON.parse(await readFile("./anagramStore.json"));
 
 function anagramChecker(args) {
   // check whether all inputs have been included
   if (args[0] == null || args[1] == null || args[2] == null) {
-    console.log("include all inputs");
-    return;
+    return "include all inputs";
   }
 
   const inputs = {
@@ -17,40 +16,34 @@ function anagramChecker(args) {
 
   // check whether input contains numbers
   if (/\d/.test(inputs.word1) || /\d/.test(inputs.word2)) {
-    console.log("No numbers allowed");
-    return;
+    return "no numbers allowed";
   }
 
   // check whether input contains spaces
   if (/\s/.test(inputs.word1) || /\s/.test(inputs.word2)) {
-    console.log("No spaces allowed");
-    return;
+    return "no spaces allowed";
   }
 
   // check whether input contains special characters
   if (
     /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(inputs.word1) ||
     /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(inputs.word2)
-  ) {
-    console.log("No special characters allowed");
-    return;
-  }
+  )
+    return "no special characters allowed";
 
   // check whether words are the same
   if (inputs.word1 == inputs.word2) {
-    console.log("These words are the same");
-    return;
+    return "these words are the same";
   }
 
   // check words are equal length
   if (inputs.word1.length != inputs.word2.length) {
-    console.log(
+    return (
       inputs.word1 +
-        " and " +
-        inputs.word2 +
-        " are not of equal length and therefore cannot be anagrams"
+      " and " +
+      inputs.word2 +
+      " are not of equal length and therefore cannot be anagrams"
     );
-    return;
   }
 
   // check whether words are anagrams
@@ -59,24 +52,22 @@ function anagramChecker(args) {
   for (let i = 0; i < anagrams.length; i++) {
     if (anagrams[i].word1 == inputs.word1) {
       if (anagrams[i].word2 == inputs.word2) {
-        console.log(
+        return (
           inputs.word1 +
-            " and " +
-            inputs.word2 +
-            " are an anagram and already exist in cache"
+          " and " +
+          inputs.word2 +
+          " are an anagram and already exist in cache"
         );
-        return;
       }
     }
     if (anagrams[i].word2 == inputs.word1) {
       if (anagrams[i].word1 == inputs.word2) {
-        console.log(
+        return (
           inputs.word1 +
-            " and " +
-            inputs.word2 +
-            " are an anagram and already exist in cache"
+          " and " +
+          inputs.word2 +
+          " are an anagram and already exist in cache"
         );
-        return;
       }
     }
   }
@@ -89,7 +80,6 @@ function anagramChecker(args) {
 
   // words with letters sorted alphabetically are compared to eachother. If equal, words are anagrams and appeneded to the anagrams array and written to file
   if (sortedWord1 == sortedWord2) {
-    console.log(inputs.word1 + " and " + inputs.word2 + " are an anagram");
     // append new anagram to anagram array
     anagrams.push({
       userName: inputs.userName,
@@ -97,13 +87,13 @@ function anagramChecker(args) {
       word2: inputs.word2,
     });
     // write anagram array to file
-    writeFile("./data.json", JSON.stringify(anagrams), function (err) {
-      if (err) {
-        console.error(err);
-      }
+    writeFile("./anagramStore.json", JSON.stringify(anagrams), function (err) {
+      if (err) return err;
     });
+    // return message to be displayed on console
+    return inputs.word1 + " and " + inputs.word2 + " are an anagram";
   } else {
-    console.log(inputs.word1 + " and " + inputs.word2 + " are not anagrams");
+    return inputs.word1 + " and " + inputs.word2 + " are not an anagram";
   }
 }
 
